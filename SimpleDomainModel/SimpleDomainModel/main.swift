@@ -52,26 +52,29 @@ public struct Money {
         } else {
             print("Please enter a acceptable currency not: \(to)")
         }
+        return self
     }
     
     private func convertOut() -> Double {
         if (self.currency == "GBP") {
-            return Double.init((self.pennies / 2)) / 100
+            return Double.init((self.pennies / 2)) / 100.0
         } else if (self.currency == "EUR") {
-            return Double.init((self.pennies * 1.5)) / 100
+            return (Double.init(self.pennies) * 1.5) / 100.0
         } else if (self.currency == "CAN") {
-            return Double.init((self.pennies * 1.5)) / 100
+            return (Double.init(self.pennies) * 1.5) / 100.0
         } else {
-            return self.pennies / 100
+            return Double.init(self.pennies / 100)
         }
     }
     
     public mutating func add(to: Money) -> Money {
         self.pennies = self.pennies + to.pennies
+        return self
     }
     
-    public func subtract(from: Money) -> Money {
+    public mutating func subtract(from: Money) -> Money {
         self.pennies = self.pennies - from.pennies
+        return self
     }
 }
 
