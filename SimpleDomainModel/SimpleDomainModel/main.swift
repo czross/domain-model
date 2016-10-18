@@ -82,22 +82,40 @@ public struct Money {
 // Job
 //
 open class Job {
-  fileprivate var title : String
-  fileprivate var type : JobType
-
-  public enum JobType {
-    case Hourly(Double)
-    case Salary(Int)
-  }
+    fileprivate var title : String
+    fileprivate var type : JobType
+    
   
-  public init(title : String, type : JobType) {
-  }
+    public enum JobType {
+        case Hourly(Double)
+        case Salary(Int)
+    }
   
-  open func calculateIncome(_ hours: Int) -> Int {
-  }
+    public init(title : String, type : JobType) {
+        self.title = title
+        self.type = type
+    }
   
-  open func raise(_ amt : Double) {
-  }
+    open func calculateIncome(_ hours: Int) -> Int {
+        switch self.type {
+        case let .Salary(cash):
+            return cash
+        case let .Hourly(cash) :
+            let time = Double.init(hours)
+            return Int.init(cash * time)
+        }
+    }
+  
+    open func raise(_ amt : Double) {
+        switch self.type {
+        case let .Salary(cash):
+            let percent = amt / 100 + 1
+            let currentAmt = Double.init(cash)
+            self.type = JobType.Salary(Int.init(currentAmt * percent))
+        default:
+            break
+        }
+    }
 }
 
 ////////////////////////////////////
@@ -110,15 +128,25 @@ open class Person {
 
   fileprivate var _job : Job? = nil
   open var job : Job? {
-    get { }
+    get { return _job }
     set(value) {
+        if (self.age >= 16) {
+            self._job = value
+        } else {
+            print("This person is to young to have a job")
+        }
     }
   }
   
   fileprivate var _spouse : Person? = nil
   open var spouse : Person? {
-    get { }
+    get { return _spouse}
     set(value) {
+        if (self.age >= 18 && (value?.age)! >= 18) {
+            self._spouse = value
+        } else {
+            print("One of these people is to young for marriage")
+        }
     }
   }
   
@@ -129,6 +157,7 @@ open class Person {
   }
   
   open func toString() -> String {
+    return "" + self.firstName + " " + self.lastName + " is \(self.age) years old"
   }
 }
 
