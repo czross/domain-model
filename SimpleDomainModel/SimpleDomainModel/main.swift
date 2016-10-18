@@ -171,9 +171,13 @@ open class Family {
   }
   
   open func haveChild(_ child: Person) -> Bool {
+    
+    return true
   }
   
   open func householdIncome() -> Int {
+    
+    return 0
   }
 }
 
