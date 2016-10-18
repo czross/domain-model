@@ -24,16 +24,6 @@ open class TestMe {
 // Money
 //
 public struct Money {
-   /* public var amount : Int
-    public var currency : String
-  
-  public func convert(_ to: String) -> Money {
-  }
-  
-  public func add(_ to: Money) -> Money {
-  }
-  public func subtract(_ from: Money) -> Money {
-  } */
     
     private var pennies: Int =  0
     public var amount : Int {
@@ -168,20 +158,36 @@ open class Family {
   fileprivate var members : [Person] = []
   
   public init(spouse1: Person, spouse2: Person) {
+    if (spouse1.age >= 21 || spouse2.age >= 21 && spouse1.spouse == nil && spouse2.spouse == nil) {
+        let person1 = spouse1
+        let person2 = spouse2
+        person1.spouse = person2
+        person2.spouse = person1
+        self.members.append(person1)
+        self.members.append(person2)
+    }
   }
   
   open func haveChild(_ child: Person) -> Bool {
-    
+    child.age = 0
+    self.members.append(child)
     return true
   }
   
   open func householdIncome() -> Int {
-    
-    return 0
+    var income = 0
+    for people in self.members {
+        if (people.job != nil) {
+            switch people.job!.type {
+            case .Salary(_):
+                income += (people.job?.calculateIncome(0))!
+            case .Hourly(_):
+                income += (people.job?.calculateIncome(2000))!
+            }
+        }
+    }
+    return income
   }
 }
-
-
-
 
 
