@@ -21,6 +21,11 @@
                BlueprintName = "SimpleDomainModelTests"
                ReferencedContainer = "container:SimpleDomainModel.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "SimpleDomainModelTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <AdditionalOptions>
